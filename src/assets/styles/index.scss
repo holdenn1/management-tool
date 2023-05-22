@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&display=swap');
-
+@import './variables/';
 html,
 body {
 	line-height: 1;
@@ -7,9 +7,10 @@ body {
 }
 
 #app {
-	min-height: 100%;
+	overflow: hidden;
 	display: flex;
 	flex-direction: column;
+	min-height: 100vh;
 }
 
 h1,
@@ -28,4 +29,5 @@ label {
 	line-height: 120%;
 	font-weight: 400;
 	text-decoration: none;
+	color: $primary-color;
 }

@@ -5,5 +5,4 @@ export type SignInValues = {
 
 export type SignUpValues = SignInValues & {
 	name: string;
-	surname: string;
 };

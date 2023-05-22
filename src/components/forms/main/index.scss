@@ -1,0 +1,25 @@
+@import '@/assets/styles/mixins/flexColumnAICenter.scss';
+@import '@/assets/styles/variables';
+.main-form {
+	border: $primary-border;
+	box-shadow: $primary-box-shadow;
+	border-radius: $primary-border-radius;
+	margin: 12px;
+	padding: 30px 12px 12px;
+	width: 340px;
+	height: 420px;
+	@include flexColumnAICenter;
+	justify-content: center;
+	overflow: hidden;
+	box-sizing: border-box;
+	@media screen and (max-height: 600px) {
+		height: 380px;
+	}
+	&__is-account {
+		text-align: center;
+		a {
+			color: rgb(37, 37, 180);
+			font-weight: 500;
+		}
+	}
+}

@@ -10,6 +10,7 @@
 			@input="handleChange"
 			@blur="handleBlur"
 			class="text-input__input"
+			:class="{ 'text-input__is-error': errorMessage }"
 		/>
 		<p class="text-input__error" v-show="errorMessage || meta.valid">
 			{{ errorMessage }}
@@ -44,4 +45,34 @@
 	});
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+	@import '@/assets/styles/variables';
+	@import '@/assets/styles/mixins/input.scss';
+	@import '@/assets/styles/mixins/flexColumnAICenter.scss';
+
+	.text-input {
+		@include flexColumnAICenter;
+		&__label {
+			font-size: $fz-title-form;
+			margin-bottom: 4px;
+		}
+		&__input {
+			@include input(0 0 14px 0);
+		}
+		&__is-error {
+			border: 1px solid red;
+			background: rgb(230, 181, 181);
+			&::placeholder {
+				color: rgb(43, 42, 42);
+			}
+			&:focus {
+				border: 1px solid red;
+			}
+		}
+		&__error {
+			color: red;
+			margin-bottom: 6px;
+			text-align: center;
+		}
+	}
+</style>
