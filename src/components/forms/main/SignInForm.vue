@@ -29,6 +29,9 @@
 	import { RouterLink } from 'vue-router';
 	import TextInput from '@/components/UI/inputs/TextInput.vue';
 	import RegistrationButton from '@/components/UI/buttons/RegistrationButton.vue';
+	import { useUserStore } from '@/stores/userStore';
+
+	const store = useUserStore();
 
 	const initialValues: SignInValues = {
 		email: '',
@@ -41,7 +44,7 @@
 	});
 
 	const onSubmit = handleSubmit((values, { resetForm }) => {
-		console.log(values);
+		store.signInUser(values);
 		resetForm();
 	});
 </script>
