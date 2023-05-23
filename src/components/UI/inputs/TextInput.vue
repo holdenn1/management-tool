@@ -1,5 +1,5 @@
 <template>
-	<div class="text-input">
+	<div class="text-input" :class="{ 'text-input-error': onInvalidSubmit && errorMessage }">
 		<label class="text-input__label" :for="name" v-if="label">{{ label }}</label>
 		<input
 			:name="name"
@@ -7,8 +7,7 @@
 			:type="type"
 			:value="inputValue"
 			:placeholder="placeholder"
-			@input="handleChange"
-			@blur="handleBlur"
+			v-on="validationListeners"
 			class="text-input__input"
 			:class="{ 'text-input__is-error': errorMessage }"
 		/>
@@ -20,7 +19,7 @@
 
 <script setup lang="ts">
 	import { useField } from 'vee-validate';
-	import { toRef } from 'vue';
+	import { toRef, computed } from 'vue';
 
 	type TextInputProps = {
 		type: string;
@@ -28,6 +27,7 @@
 		name: string;
 		label?: string;
 		placeholder: string;
+		onInvalidSubmit: boolean;
 	};
 
 	const props = defineProps<TextInputProps>();
@@ -38,10 +38,24 @@
 		value: inputValue,
 		errorMessage,
 		handleChange,
-		handleBlur,
 		meta,
 	} = useField(name, undefined, {
 		initialValue: props.value,
+	});
+
+	const validationListeners = computed(() => {
+		if (!errorMessage.value) {
+			return {
+				blur: handleChange,
+				change: handleChange,
+			};
+		}
+
+		return {
+			blur: handleChange,
+			change: handleChange,
+			input: handleChange,
+		};
 	});
 </script>
 
@@ -73,6 +87,23 @@
 			color: red;
 			margin-bottom: 6px;
 			text-align: center;
+		}
+	}
+	.text-input-error {
+		position: relative;
+		animation-name: input-error;
+		animation-duration: 0.16s;
+		animation-timing-function: linear;
+		animation-iteration-count: 2;
+		@keyframes input-error {
+			0% {
+				left: 2px;
+			}
+			50% {
+			}
+			100% {
+				right: 2px;
+			}
 		}
 	}
 </style>

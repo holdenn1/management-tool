@@ -6,6 +6,7 @@
 			name="name"
 			label="Enter your name"
 			placeholder="Enter your name"
+			:onInvalidSubmit="isSubmitError"
 		/>
 		<TextInput
 			type="email"
@@ -13,6 +14,7 @@
 			name="email"
 			label="Enter your email"
 			placeholder="Enter your email"
+			:onInvalidSubmit="isSubmitError"
 		/>
 		<TextInput
 			type="password"
@@ -20,6 +22,7 @@
 			name="password"
 			label="Enter your passwordd"
 			placeholder="Enter your passwordd"
+			:onInvalidSubmit="isSubmitError"
 		/>
 		<RegistrationButton>Sign Up</RegistrationButton>
 		<p class="main-form__is-account">
@@ -37,6 +40,9 @@
 	import TextInput from '@/components/UI/inputs/TextInput.vue';
 	import RegistrationButton from '@/components/UI/buttons/RegistrationButton.vue';
 	import { useUserStore } from '@/stores/userStore';
+	import { ref } from 'vue';
+
+	const isSubmitError = ref<boolean>(false);
 
 	const store = useUserStore();
 
@@ -52,9 +58,14 @@
 	});
 
 	const onSubmit = handleSubmit((values, { resetForm }) => {
-		store.signUpUser(values)
+		store.signUpUser(values);
 		resetForm();
-	});
+	}, onInvalidSubmit);
+
+	function onInvalidSubmit() {
+		isSubmitError.value = true;
+		setTimeout(() => (isSubmitError.value = false), 400);
+	}
 </script>
 
 <style lang="scss" scoped>

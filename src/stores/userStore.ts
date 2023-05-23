@@ -32,7 +32,6 @@ export const useUserStore = defineStore('userStore', () => {
 					const usersAccountRef = databaseRef(database, 'users-accounts');
 					const newAccount = push(usersAccountRef);
 					if (newAccount.key) {
-						router.push('/');
 						const account: Account = {
 							accountId: newAccount.key,
 							userId: user.uid,
@@ -42,6 +41,7 @@ export const useUserStore = defineStore('userStore', () => {
 						set(newAccount, account);
 					}
 					setUser(user.uid, user.email, userData.name);
+					router.push('/');
 				}
 			})
 			.catch((err) => {
@@ -60,9 +60,9 @@ export const useUserStore = defineStore('userStore', () => {
 							(account) => account.userId === user.uid,
 						)!;
 						setUser(account.userId, account.userEmail, account.userName);
+						router.push('/');
 					}
 				});
-				router.push('/');
 			})
 			.catch((err) => {
 				console.log(err);
